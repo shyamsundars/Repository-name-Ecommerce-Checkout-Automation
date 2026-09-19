@@ -1,7 +1,24 @@
 import { test, expect } from '../fixtures/testFixture.js';
 
-test('Application is accessible', async ({ page }) => {
-  await page.goto('/');
+test('User can add a product to cart', async ({
+  loginPage,
+  productsPage,
+  page,
+  cartPage,
+}) => {
+  await loginPage.goto();
 
-  await expect(page).toHaveTitle(/Swag Labs/);
+  await loginPage.login('standard_user', 'secret_sauce');
+
+  await expect(page).toHaveURL(/inventory/);
+
+  await productsPage.addProduct('Sauce Labs Backpack');
+
+  await productsPage.openCart();
+
+  await expect(page).toHaveURL(/cart/);
+
+  await expect(
+    await cartPage.getItem('Sauce Labs Backpack')
+  ).toBeVisible();
 });
