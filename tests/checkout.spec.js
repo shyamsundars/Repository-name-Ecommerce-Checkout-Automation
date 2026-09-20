@@ -2,8 +2,8 @@ import { test, expect } from '../fixtures/testFixture.js';
 import { checkoutData } from '../data/testData.js';
 
 //test('User can complete checkout successfully', async ({
-test('@regression User can complete checkout with multiple products', async ({
 //test('@smoke User can complete checkout successfully', async ({
+test('User can complete checkout successfully', { tag: '@smoke' }, async ({ 
   loginPage,
   productsPage,
   cartPage,
@@ -65,7 +65,13 @@ test('@regression User can complete checkout with multiple products', async ({
   ).toBeVisible();
 });
 
-test('User can complete checkout with multiple products', async ({
+//test('User can complete checkout successfully', { tag: '@smoke' }, async ({ 
+//test('@regression User can complete checkout with multiple products', async ({
+//test('User can complete checkout with multiple products', { tag: '@regression' }, async ({ ... }) => {
+test(
+  'User can complete checkout with multiple products',
+  { tag: '@regression' },
+  async ({ 
   loginPage,
   productsPage,
   cartPage,
