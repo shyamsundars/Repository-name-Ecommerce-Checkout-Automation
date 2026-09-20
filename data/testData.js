@@ -9,8 +9,20 @@ export const checkoutData = {
     password: 'invalid_password',
   },
 
-  product: {
-    name: 'Sauce Labs Backpack',
+  products: {
+    backpack: {
+      name: 'Sauce Labs Backpack',
+      price: '$29.99',
+    },
+
+    bikeLight: {
+      name: 'Sauce Labs Bike Light',
+      price: '$9.99',
+    },
+  },
+
+  pricing: {
+    twoProductSubtotal: 39.98,
   },
 
   customer: {

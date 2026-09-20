@@ -14,7 +14,7 @@ test.describe('Checkout validation', () => {
       checkoutData.validUser.password
     );
 
-    await productsPage.addProduct(checkoutData.product.name);
+    await productsPage.addProduct(checkoutData.products.backpack.name);
     await productsPage.openCart();
     await cartPage.checkout();
   });

@@ -1,32 +1,49 @@
 export class CheckoutPage {
-  constructor(page) {
-    this.page = page;
+    constructor(page) {
+        this.page = page;
 
-    this.firstNameInput = page.getByRole('textbox', { name: 'First Name' });
-    this.lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
-    this.postalCodeInput = page.getByRole('textbox', { name: 'Postal Code' });
+        this.firstNameInput = page.getByRole('textbox', { name: 'First Name' });
+        this.lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
+        this.postalCodeInput = page.getByRole('textbox', { name: 'Postal Code' });
 
-    this.continueButton = page.getByRole('button', { name: 'Continue' });
-    this.finishButton = page.getByRole('button', { name: 'Finish' });
+        this.continueButton = page.getByRole('button', { name: 'Continue' });
+        this.finishButton = page.getByRole('button', { name: 'Finish' });
 
-    this.subtotal = page.locator('[data-test="subtotal-label"]');
-    this.tax = page.locator('[data-test="tax-label"]');
-    this.total = page.locator('[data-test="total-label"]');
+        this.subtotal = page.locator('[data-test="subtotal-label"]');
+        this.tax = page.locator('[data-test="tax-label"]');
+        this.total = page.locator('[data-test="total-label"]');
 
-    this.errorMessage = page.locator('[data-test="error"]');
-  }
+        this.errorMessage = page.locator('[data-test="error"]');
+    }
 
-  async enterCustomerInformation(firstName, lastName, postalCode) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
-  }
+    async enterCustomerInformation(firstName, lastName, postalCode) {
+        await this.firstNameInput.fill(firstName);
+        await this.lastNameInput.fill(lastName);
+        await this.postalCodeInput.fill(postalCode);
+    }
 
-  async continueToOverview() {
-    await this.continueButton.click();
-  }
+    async continueToOverview() {
+        await this.continueButton.click();
+    }
 
-  async finishOrder() {
-    await this.finishButton.click();
-  }
+    async finishOrder() {
+        await this.finishButton.click();
+    }
+
+    getSubtotal() {
+        return this.subtotal;
+    }
+
+    getTax() {
+        return this.tax;
+    }
+
+    getTotal() {
+        return this.total;
+    }
+
+    async getPriceValue(locator) {
+        const text = await locator.textContent();
+        return Number(text.replace(/[^0-9.]/g, ''));
+    }
 }
