@@ -25,7 +25,7 @@ test.describe('Cart management', () => {
     await productsPage.openCart();
   });
 
-  test('User can add multiple products to cart', async ({
+  test('User can add multiple products to cart', { tag: '@regression' }, async ({
     cartPage,
   }) => {
     await expect(
@@ -55,7 +55,7 @@ test.describe('Cart management', () => {
     await expect(cartPage.cartItems).toHaveCount(2);
   });
 
-  test('User can remove a product from cart', async ({
+  test('User can remove a product from cart', { tag: '@regression' }, async ({
     cartPage,
   }) => {
     await cartPage.removeProduct(

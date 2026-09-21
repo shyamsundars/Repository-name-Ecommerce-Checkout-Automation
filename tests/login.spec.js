@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/testFixture.js';
 import { checkoutData } from '../data/testData.js';
 
 test.describe('Login validation', () => {
-  test('User cannot login with invalid credentials', async ({
+  test('User cannot login with invalid credentials', { tag: '@regression' }, async ({
     loginPage,
   }) => {
     await loginPage.goto();
@@ -17,7 +17,7 @@ test.describe('Login validation', () => {
     );
   });
 
-  test('User cannot login without username', async ({ loginPage }) => {
+  test('User cannot login without username', { tag: '@regression' }, async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.login('', checkoutData.validUser.password);
@@ -27,7 +27,7 @@ test.describe('Login validation', () => {
     );
   });
 
-  test('User cannot login without password', async ({ loginPage }) => {
+  test('User cannot login without password', { tag: '@regression' }, async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.login(
