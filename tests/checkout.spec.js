@@ -1,15 +1,16 @@
 import { test, expect } from '../fixtures/testFixture.js';
 import { checkoutData } from '../data/testData.js';
+import { extractPdfText } from '../utils/pdfUtils.js';
 
 //test('User can complete checkout successfully', async ({
 //test('@smoke User can complete checkout successfully', async ({
-test('User can complete checkout successfully', { tag: '@smoke' }, async ({ 
+test('User can complete checkout successfully', { tag: '@smoke' }, async ({
   loginPage,
   productsPage,
   cartPage,
   checkoutPage,
   confirmationPage,
-}) => {
+}, testInfo) => {
   await loginPage.goto();
 
   await loginPage.login(
@@ -63,6 +64,14 @@ test('User can complete checkout successfully', { tag: '@smoke' }, async ({
   await expect(
     confirmationPage.confirmationMessage
   ).toBeVisible();
+
+  const pdfPath = testInfo.outputPath('order-confirmation.pdf');
+
+  await confirmationPage.generatePdf(pdfPath);
+
+  const pdfText = await extractPdfText(pdfPath);
+
+  expect(pdfText).toContain('Thank you for your order!');
 });
 
 //test('User can complete checkout successfully', { tag: '@smoke' }, async ({ 
@@ -71,63 +80,63 @@ test('User can complete checkout successfully', { tag: '@smoke' }, async ({
 test(
   'User can complete checkout with multiple products',
   { tag: '@regression' },
-  async ({ 
-  loginPage,
-  productsPage,
-  cartPage,
-  checkoutPage,
-  confirmationPage,
-}) => {
-  await loginPage.goto();
+  async ({
+    loginPage,
+    productsPage,
+    cartPage,
+    checkoutPage,
+    confirmationPage,
+  }) => {
+    await loginPage.goto();
 
-  await loginPage.login(
-    checkoutData.validUser.username,
-    checkoutData.validUser.password
-  );
+    await loginPage.login(
+      checkoutData.validUser.username,
+      checkoutData.validUser.password
+    );
 
-  await productsPage.addProduct(
-    checkoutData.products.backpack.name
-  );
+    await productsPage.addProduct(
+      checkoutData.products.backpack.name
+    );
 
-  await productsPage.addProduct(
-    checkoutData.products.bikeLight.name
-  );
+    await productsPage.addProduct(
+      checkoutData.products.bikeLight.name
+    );
 
-  await productsPage.openCart();
+    await productsPage.openCart();
 
-  await expect(cartPage.cartItems).toHaveCount(2);
+    await expect(cartPage.cartItems).toHaveCount(2);
 
-  await cartPage.checkout();
+    await cartPage.checkout();
 
-  await checkoutPage.enterCustomerInformation(
-    checkoutData.customer.firstName,
-    checkoutData.customer.lastName,
-    checkoutData.customer.postalCode
-  );
+    await checkoutPage.enterCustomerInformation(
+      checkoutData.customer.firstName,
+      checkoutData.customer.lastName,
+      checkoutData.customer.postalCode
+    );
 
-  await checkoutPage.continueToOverview();
+    await checkoutPage.continueToOverview();
 
-  const subtotal = await checkoutPage.getPriceValue(
-    checkoutPage.subtotal
-  );
+    const subtotal = await checkoutPage.getPriceValue(
+      checkoutPage.subtotal
+    );
 
-  const tax = await checkoutPage.getPriceValue(
-    checkoutPage.tax
-  );
+    const tax = await checkoutPage.getPriceValue(
+      checkoutPage.tax
+    );
 
-  const total = await checkoutPage.getPriceValue(
-    checkoutPage.total
-  );
+    const total = await checkoutPage.getPriceValue(
+      checkoutPage.total
+    );
 
-  expect(subtotal).toBe(
-    checkoutData.pricing.twoProductSubtotal
-  );
+    expect(subtotal).toBe(
+      checkoutData.pricing.twoProductSubtotal
+    );
 
-  expect(total).toBeCloseTo(subtotal + tax, 2);
+    expect(total).toBeCloseTo(subtotal + tax, 2);
 
-  await checkoutPage.finishOrder();
+    await checkoutPage.finishOrder();
 
-  await expect(
-    confirmationPage.confirmationMessage
-  ).toBeVisible();
-});
+    await expect(
+      confirmationPage.confirmationMessage
+    ).toBeVisible();
+  });
