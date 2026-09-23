@@ -77,10 +77,7 @@ test('User can complete checkout successfully', { tag: '@smoke' }, async ({
 //test('User can complete checkout successfully', { tag: '@smoke' }, async ({ 
 //test('@regression User can complete checkout with multiple products', async ({
 //test('User can complete checkout with multiple products', { tag: '@regression' }, async ({ ... }) => {
-test(
-  'User can complete checkout with multiple products',
-  { tag: '@regression' },
-  async ({
+test('User can complete checkout with multiple products', { tag: '@regression' }, async ({
     loginPage,
     productsPage,
     cartPage,

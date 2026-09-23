@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/testFixture.js';
 
-test('User can add a product to cart', async ({
+test('User can add a product to cart', { tag: '@smoke' }, async ({
   loginPage,
   productsPage,
   page,

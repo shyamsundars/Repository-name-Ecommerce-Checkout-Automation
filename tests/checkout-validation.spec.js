@@ -19,7 +19,7 @@ test.describe('Checkout validation', () => {
     await cartPage.checkout();
   });
 
-  test('Checkout requires first name', async ({ checkoutPage }) => {
+  test('Checkout requires first name',{ tag: '@regression' }, async ({ checkoutPage }) => {
     await checkoutPage.enterCustomerInformation(
       '',
       checkoutData.customer.lastName,
@@ -33,7 +33,7 @@ test.describe('Checkout validation', () => {
     );
   });
 
-  test('Checkout requires last name', async ({ checkoutPage }) => {
+  test('Checkout requires last name', { tag: '@regression' }, async ({ checkoutPage }) => {
     await checkoutPage.enterCustomerInformation(
       checkoutData.customer.firstName,
       '',
@@ -47,7 +47,7 @@ test.describe('Checkout validation', () => {
     );
   });
 
-  test('Checkout requires postal code', async ({ checkoutPage }) => {
+  test('Checkout requires postal code', { tag: '@regression' }, async ({ checkoutPage }) => {
     await checkoutPage.enterCustomerInformation(
       checkoutData.customer.firstName,
       checkoutData.customer.lastName,
